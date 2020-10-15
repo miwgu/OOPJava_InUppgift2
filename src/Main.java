@@ -18,55 +18,92 @@ public class Main {
         List<Person> personList = Database.readDataFromFile(filePath);
         List<Person> onlyMembersPersons = Logic.getAllMembersPersons(personList);
 
+    while (true) {
+    Scanner sc = new Scanner(System.in);
+    System.out.println("***********************************************\n" +
+                    "Söka meddlemmer med personnummer eller namn \n"+
+                    "Ange nummer\n"+
+                    "1) Personnummer\n" +
+                    "2) Namn\n"+
+                    "3) Avbryt\n"+
+                    "***********************************************\n"     );
+    String nummer = sc.next().trim();
 
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Söka med personnummer-->1 eller namn-->2\nAnge nummer 1 eller 2");
-        int nummer = sc.nextInt();
+    //---Swich---
+    boolean existActiv=false;
+    boolean existDatabase=false;
+    switch (nummer) {
+        case "1":
+            System.out.println("Ange personnummer");
+            sc = new Scanner(System.in);
+            String searchPersonNr = sc.next().trim();
 
-        //---Swich---
-        boolean exist;
-        switch (nummer) {
-            case 1:
-                System.out.println("Ange personnummer");
-                //String s1 = JOptionPane.showInputDialog("Ange personnummer");
-                sc = new Scanner(System.in);
-                String searchPersonNr = sc.next();
+            for (Person m : onlyMembersPersons) {
+                if (m.getPersonNr().equals(searchPersonNr)) {
+                    //p.getMessage();
+                    System.out.println(m.getName() + " är medlemmer");
+                    Output.createFile(outFile, m.getName(), m.getPersonNr());
+                    existActiv = true;
+                    break;
+                } else
+                    existActiv= false;
 
-                for (Person p : onlyMembersPersons) {
-                    if (p.getPersonNr().equalsIgnoreCase(searchPersonNr)) {
-                        p.getMessage();
-                        Output.createFile(outFile,p.getName(),p.getPersonNr());
-                        exist=true;
+            }
+            if (!existActiv)
+                for (Person p : Database.readDataFromFile(filePath)) {
+                    if (p.getPersonNr().equals(searchPersonNr)) {
+                        System.out.println(p.getName() + " är inte medlemmer längre."+ "\nDatum som årsavgiften betalades senaste " + p.getDate());
+                        existDatabase = true;
                         break;
-                    }else
-                        exist=false;
+                    } else
+                        existDatabase = false;
                 }
-                if(exist=false)
-                    System.out.println("Det finns inte personnummer: " + searchPersonNr + " som meddlem.");// Det måste bara boolean...null eller det finnas
-                break;
-            case 2:
-                System.out.println("Ange namn (Förnamn Eftername)");
-                // String s2 = JOptionPane.showInputDialog("Ange namn");
-                sc = new Scanner(System.in);
-                String searchName = sc.nextLine();
+            if(!existDatabase&&!existActiv)
+                System.out.println("Det finns inte personnummer: " + searchPersonNr + " som medlemmer.");// Det måste bara boolean...null eller det finnas
+            break;
+        default:
+            System.out.println("Felaktig inmatning");
+            break;
 
-                for (Person p : onlyMembersPersons) {
+
+        case "2":
+            System.out.println("Ange namn (Förnamn Eftername)");
+            sc = new Scanner(System.in);
+            String searchName = sc.nextLine().trim();
+
+            for (Person m : onlyMembersPersons) {
+                if (m.getName().equalsIgnoreCase(searchName)) {
+                    System.out.println(m.getName() + " är medlemmer");
+                    Output.createFile(outFile, m.getName(), m.getPersonNr());
+                    existActiv = true;
+                    break;
+                } else
+                    existActiv = false;
+
+            }
+            if (!existActiv)
+                for (Person p : Database.readDataFromFile(filePath)) {
                     if (p.getName().equalsIgnoreCase(searchName)) {
-                        p.getMessage();
-                        Output.createFile(outFile,p.getName(),p.getPersonNr());
-                        exist=true;
+                        //p.getMessage();
+                        System.out.println(p.getName() + " är inte medlemmer längre."+ "\nDatum som årsavgiften betalades senaste " + p.getDate());
+                        existDatabase = true;
                         break;
-                    }else
-                        exist=false;
+                    } else
+                        existDatabase = false;
+
                 }
-                if(exist=false)
-                    System.out.println("Det finns inte namn: " + searchName + " som meddlem.");
-                break;
-        }
+            if (!existDatabase&&!existActiv)
+                System.out.println("Det finns inte namn: " + searchName + " som meddlem.");
+            break;
+
+        case"3":
+            System.exit(0);
+         }
     }
+}
+
     public static void main (String[]args){
         Main main = new Main();
 
     }
 }
-
