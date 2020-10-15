@@ -32,7 +32,7 @@ public class Person {
         return date;
     }
 
-    public String getMessage() {
-        return String.format("Personnummer %s  %s är medlemmer.", this.personNr, this.name);
-    }
+   // public String getMessage() {
+   //     return String.format("Personnummer %s  %s är medlemmer.", this.personNr, this.name);
+    //}
 }

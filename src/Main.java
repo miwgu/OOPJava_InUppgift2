@@ -13,7 +13,7 @@ public class Main {
     public Main() {
         Person person = new Person();
         String filePath = "src\\" + "customers.txt";
-        String outFile = "src\\" + "Training.text";
+        String outFile = "src\\" + "Training.txt";
 
         List<Person> personList = Database.readDataFromFile(filePath);
         List<Person> onlyMembersPersons = Logic.getAllMembersPersons(personList);
@@ -92,7 +92,7 @@ public class Main {
                         existDatabase = false;
 
                 }
-            if (!existDatabase&&!existActiv)
+            if (!existDatabase&&!existActiv) // Man måste ange båda flag(boolean)
                 System.out.println("Det finns inte namn: " + searchName + " som meddlem.");
             break;
 
