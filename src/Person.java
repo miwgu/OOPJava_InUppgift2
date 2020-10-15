@@ -18,11 +18,9 @@ public class Person {
         this.name = name;
         this.date = date;
     }
-
     public String getPersonNr() {
         return personNr;
     }
-
 
     public String getName() {
         return name;
@@ -32,7 +30,4 @@ public class Person {
         return date;
     }
 
-   // public String getMessage() {
-   //     return String.format("Personnummer %s  %s är medlemmer.", this.personNr, this.name);
-    //}
 }

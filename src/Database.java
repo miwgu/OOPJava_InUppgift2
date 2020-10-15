@@ -1,3 +1,4 @@
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,7 +41,8 @@ public class Database {
 
                     personList.add(p);
                 }
-            } catch (IOException e) {
+
+            }catch (IOException e) {
                 System.out.println("Fel inträffade vid läsning från fil");
                 e.printStackTrace();
                 System.exit(0);

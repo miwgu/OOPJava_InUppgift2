@@ -11,11 +11,11 @@ import java.time.LocalDate;
 public class Output {
 
     public static void createFile(String filename, String memberName,String memberPersonNr)  {
-        //"src\\sprint2\\inlämningar\\uppgift2\\try2_BufferedReader\\Training.text"
 
         try (PrintWriter ut = new PrintWriter(new BufferedWriter(new FileWriter(filename, true)))) {
 
             ut.println(memberPersonNr+","+memberName+","+LocalDate.now());
+            System.out.println("Registrerad information: " + memberPersonNr+","+memberName+","+LocalDate.now());
             System.out.println("Filen har skapats");
         }catch (FileNotFoundException e){
             System.out.println("Filen kunde inte hittas");
